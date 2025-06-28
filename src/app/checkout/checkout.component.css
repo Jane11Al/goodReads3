@@ -1,0 +1,303 @@
+/* Основные стили */
+.checkout-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  font-family: 'Roboto', sans-serif;
+}
+
+h2 {
+  color: #2c3e50;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.checkout-content {
+  display: flex;
+  gap: 40px;
+}
+
+/* Сводка заказа */
+.order-summary {
+  flex: 1;
+  background: #fafafa;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  align-self: flex-start;
+}
+
+.summary-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-weight: bold;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 10px;
+}
+
+.order-items {
+  margin-bottom: 20px;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-title {
+  font-weight: 500;
+}
+
+.item-quantity {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.item-price {
+  font-weight: 500;
+}
+
+.order-totals {
+  margin-top: 20px;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+.grand-total {
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+  margin-top: 10px;
+}
+
+.checkout-form {
+  flex: 2;
+  padding-right: 20px;
+}
+
+h3 {
+  color: #2c3e50;
+  font-size: 1.4rem;
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.form-group {
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #fff;
+  transition: border-color 0.3s;
+  /* Добавлен правый отступ для полей ввода */
+  margin-right: 20px;
+}
+
+  input:focus, textarea:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  }
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+}
+
+  .form-row .form-group {
+    flex: 1;
+  }
+
+.error {
+  color: #e74c3c;
+  font-size: 0.9rem;
+  margin-top: 6px;
+}
+
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+  .payment-option:hover {
+    border-color: #3498db;
+    background: #f8fafd;
+  }
+
+  .payment-option input[type="radio"] {
+    width: auto;
+    margin-right: 12px;
+  }
+
+  .payment-option label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0;
+    font-weight: normal;
+    cursor: pointer;
+  }
+
+.icon {
+  width: 40px;
+  height: 24px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-style: normal;
+}
+
+.credit-card:before {
+  content: "💳";
+}
+
+.paypal:before {
+  content: "🔵";
+}
+
+.cash:before {
+  content: "💵";
+}
+
+.terms {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+  .terms input[type="checkbox"] {
+    width: auto;
+    margin-top: 4px;
+  }
+
+  .terms label {
+    font-weight: normal;
+    margin-bottom: 0;
+  }
+
+  .terms a {
+    color: #3498db;
+    text-decoration: none;
+  }
+
+    .terms a:hover {
+      text-decoration: underline;
+    }
+
+.submit-order {
+  background: linear-gradient(to right, #27ae60, #2ecc71);
+  color: white;
+  border: none;
+  padding: 16px 24px;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 20px;
+  transition: all 0.3s;
+  box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+  margin-right: 15px;
+}
+
+  .submit-order:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(46, 204, 113, 0.4);
+  }
+
+.order-confirmation {
+  text-align: left;
+  padding: 30px;
+  background: #f0f9f0;
+  border-radius: 10px;
+  border: 1px solid #d4edda;
+}
+
+/* Адаптивность */
+@media (max-width: 992px) {
+  .checkout-content {
+    flex-direction: column;
+  }
+
+  .order-summary {
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .checkout-container {
+    padding: 20px;
+  }
+
+  .checkout-form {
+    padding-right: 5px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .payment-option label {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  input, textarea, select,
+  .submit-order {
+    margin-right: 5px;
+  }
+}

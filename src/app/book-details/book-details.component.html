@@ -1,0 +1,63 @@
+<div class="book-details-container" *ngIf="book">
+  <div class="navigation">
+    <button (click)="goBack()">← Назад к списку книг</button>
+  </div>
+
+  <div class="book-header">
+      <div class="book-cover">
+        <img [src]="book.imageUrl || 'assets/default-book.jpg'"
+             alt="{{ book.title }}"
+             class="cover-image">
+      </div>
+
+    <div class="book-meta">
+      <h1 class="book-title">{{ book.title }}</h1>
+
+      <div class="authors" *ngIf="authors.length">
+        <span class="meta-label">Автор:</span>
+        <span>{{ authors.join(', ') }}</span>
+      </div>
+
+      <div class="genres" *ngIf="genres.length">
+        <span class="meta-label">Жанры:</span>
+        <span>{{ genres.join(', ') }}</span>
+      </div>
+
+      <div class="price-section">
+        <span class="price">{{ book.price | currency:'RUB':'symbol-narrow' }}</span>
+        <button class="buy-button">Купить</button>
+      </div>
+
+      <div class="availability">
+        <span class="in-stock">✔ В наличии</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Описание</h2>
+    <p class="book-description">{{ book.description }}</p>
+  </div>
+
+  <div class="section">
+    <h2>Характеристики</h2>
+    <div class="specs-grid">
+      <div class="spec-item">
+        <span class="spec-name">ID товара</span>
+        <span class="spec-value">{{ id }}</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-name">Издательство</span>
+        <span class="spec-value">{{ publisherName }}</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-name">ISBN</span>
+        <span class="spec-value">{{ isbn }}</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-name">Год издания</span>
+        <span class="spec-value">{{ year }}</span>
+      </div>
+    </div>
+  </div>
+</div>

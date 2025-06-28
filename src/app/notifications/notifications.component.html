@@ -1,0 +1,39 @@
+<div class="notifications-container">
+  <h2>Мои уведомления</h2>
+
+  <div class="preorder-section">
+    <h3>Книги в предзаказе</h3>
+
+    <div *ngIf="preorderBooks.length === 0" class="empty-message">
+      Нет книг в предзаказе
+    </div>
+
+    <div *ngFor="let book of preorderBooks" class="book-card">
+      <div class="book-info">
+        <h4>{{ book.title }}</h4>
+        <p>Автор: {{ book.author }}</p>
+        <p>Ожидаемая дата выхода: {{ book.releaseDate | date }}</p>
+      </div>
+
+      <button class="subscribe-btn"
+              [class.subscribed]="isSubscribed(book.id)"
+              (click)="toggleSubscription(book.id)">
+        {{ isSubscribed(book.id) ? 'Отписаться' : 'Подписаться' }}
+      </button>
+    </div>
+  </div>
+
+  <div class="subscriptions-section">
+    <h3>Мои подписки</h3>
+
+    <div *ngIf="userSubscriptions.length === 0" class="empty-message">
+      Вы не подписаны ни на один предзаказ
+    </div>
+
+    <div *ngFor="let sub of userSubscriptions" class="subscription-item">
+      <h4>{{ sub.bookTitle }}</h4>
+      <p>Дата подписки: {{ sub.subscriptionDate | date }}</p>
+      <p>Статус: {{ sub.status }}</p>
+    </div>
+  </div>
+</div>

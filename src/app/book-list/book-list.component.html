@@ -1,0 +1,53 @@
+<div class="book-container">
+  <div *ngFor="let book of books"
+       class="book-card"
+       (click)="goToBookDetails(book.id)">
+
+    <div class="book-image">
+      <img [src]="book.imageUrl || 'assets/default-book.jpg'"
+           alt="{{ book.title }}"
+           (error)="handleImageError($event)">
+    </div>
+
+    <div class="book-details">
+      <h3>{{ book.title }}</h3>
+      <p class="author">{{ getAuthorNames(book.authorId) }}</p>
+      <p class="description">{{ shortenDescription(book.description) }}</p>
+
+      <!-- Добавляем блок со статусом книги -->
+      <div class="book-status" [ngClass]="{
+        'status-available': book.status === 'available',
+        'status-out': book.status === 'out_of_stock',
+        'status-preorder': book.status === 'preorder'
+      }">
+        {{ getStatusText(book.status) }}
+      </div>
+
+      <div class="book-footer">
+        <span class="price">{{ book.price | currency:'RUB':'symbol-narrow' }}</span>
+
+        <!-- Заменяем старую кнопку на динамический контент -->
+        <div class="book-actions" (click)="$event.stopPropagation()">
+          <!-- Для книг в наличии -->
+          <button *ngIf="book.status === 'available'"
+                  class="add-to-cart"
+                  (click)="addToCart(book, $event)">
+            В корзину
+          </button>
+
+          <!-- Для книг в предзаказе -->
+          <button *ngIf="book.status === 'preorder'"
+                  class="subscribe-btn"
+                  (click)="subscribeToBook(book)">
+            Подписаться
+          </button>
+
+          <!-- Для книг отсутствующих в продаже -->
+          <p *ngIf="book.status === 'out_of_stock'" class="out-of-stock">
+            Отсутствует в продаже
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

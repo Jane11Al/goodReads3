@@ -1,0 +1,48 @@
+<div class="cart-container">
+  <h2>Корзина покупок</h2>
+
+  <div *ngIf="items.length === 0" class="empty-cart">
+    <p>Ваша корзина пуста</p>
+    <a routerLink="/" class="continue-shopping">Продолжить покупки</a>
+  </div>
+
+  <div *ngIf="items.length > 0">
+    <div class="cart-item" *ngFor="let item of items">
+      <div class="item-image">
+        <img [src]="item.book.imageUrl || 'assets/default-book.jpg'" alt="{{ item.book.title }}">
+      </div>
+
+      <div class="item-details">
+        <h3>{{ item.book.title }}</h3>
+        <p class="author">{{ getAuthorNames(item.book.authorId) }}</p>
+        <p class="price">{{ item.book.price | currency:'RUB':'symbol-narrow' }}</p>
+      </div>
+
+      <div class="item-quantity">
+        <button (click)="updateQuantity(item, item.quantity - 1)">-</button>
+        <input type="number" [(ngModel)]="item.quantity" min="1" (change)="updateQuantity(item, item.quantity)">
+        <button (click)="updateQuantity(item, item.quantity + 1)">+</button>
+      </div>
+
+      <div class="item-total">
+        {{ (item.book.price * item.quantity) | currency:'RUB':'symbol-narrow' }}
+      </div>
+
+      <div class="item-actions">
+        <button (click)="removeItem(item)">Удалить</button>
+      </div>
+    </div>
+
+    <div class="cart-summary">
+      <div class="summary-item">
+        <span>Товаров:</span>
+        <span>{{ getTotalCount() }}</span>
+      </div>
+      <div class="summary-item total-price">
+        <span>Итого:</span>
+        <span>{{ getTotalPrice() | currency:'RUB':'symbol-narrow' }}</span>
+      </div>
+      <button routerLink="/checkout" class="checkout-button">Оформить заказ</button>
+    </div>
+  </div>
+</div>

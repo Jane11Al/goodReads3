@@ -1,0 +1,142 @@
+<div class="warehouse-container">
+  <div *ngIf="showNotification" class="notification">
+    Изменения успешно сохранены!
+  </div>
+
+  <div class="header">
+    <h2>Управление складом</h2>
+    <button class="btn-add" (click)="openAddBookModal()">Добавить книгу</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Название</th>
+        <th>Автор</th>
+        <th>Цена</th>
+        <th>Количество</th>
+        <th>Статус</th>
+        <th>Действия</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let book of books">
+        <td>{{ book.title }}</td>
+        <td>{{ getAuthorsForBook(book.id) }}</td>
+        <td>{{ book.price }} ₽</td>
+        <td>
+          <input type="number" [(ngModel)]="book.stock" min="0">
+        </td>
+        <td>
+          <select [(ngModel)]="book.status">
+            <option value="available">В наличии</option>
+            <option value="out_of_stock">Нет в наличии</option>
+            <option value="preorder">Предзаказ</option>
+          </select>
+          <span class="status-label">{{ getStatusName(book.status) }}</span>
+        </td>
+        <td>
+          <button class="btn-save" (click)="saveBook(book)">Сохранить</button>
+          <button class="btn-edit" (click)="openEditBookModal(book)">Изменить</button>
+          <button class="btn-delete" (click)="deleteBook(book.id)">Удалить</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Модальное окно -->
+  <div *ngIf="showAddBookModal" class="modal-backdrop">
+    <div class="add-book-modal">
+      <button class="close-btn" (click)="closeModal()">&times;</button>
+      <h3>{{ isEditing ? 'Редактировать книгу' : 'Добавить новую книгу' }}</h3>
+
+      <form [formGroup]="bookForm" (ngSubmit)="addOrUpdateBook()">
+        <div class="form-group">
+          <label>Название книги:</label>
+          <input type="text" formControlName="title">
+          <div *ngIf="bookForm.get('title')?.invalid && bookForm.get('title')?.touched" class="error">
+            Название обязательно
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Авторы:</label>
+          <select formControlName="authorIds" multiple>
+            <option *ngFor="let author of authors" [value]="author.id">
+              {{ author.fullName }}
+            </option>
+          </select>
+          <div *ngIf="bookForm.get('authorIds')?.invalid && bookForm.get('authorIds')?.touched" class="error">
+            Выберите хотя бы одного автора
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Цена:</label>
+          <input type="number" formControlName="price" min="0">
+          <div *ngIf="bookForm.get('price')?.invalid && bookForm.get('price')?.touched" class="error">
+            Введите корректную цену
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Количество:</label>
+          <input type="number" formControlName="stock" min="0">
+        </div>
+
+        <div class="form-group">
+          <label>Статус:</label>
+          <select formControlName="status">
+            <option *ngFor="let status of statuses" [value]="status">
+              {{ getStatusName(status) }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Добавьте остальные поля по аналогии -->
+        <div class="form-group">
+          <label>Описание:</label>
+          <textarea formControlName="description"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Издатель:</label>
+          <select formControlName="publisherId">
+            <option *ngFor="let publisher of publishers" [value]="publisher.id">
+              {{ publisher.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Жанры:</label>
+          <select formControlName="genreId" multiple>
+            <option *ngFor="let genre of genres" [value]="genre.id">
+              {{ genre.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>ISBN:</label>
+          <input type="text" formControlName="isbn">
+        </div>
+
+        <div class="form-group">
+          <label>Год издания:</label>
+          <input type="number" formControlName="year">
+        </div>
+
+        <div class="form-group">
+          <label>URL изображения:</label>
+          <input type="text" formControlName="imageUrl">
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" (click)="closeModal()">Отмена</button>
+          <button type="submit" class="btn-submit">{{ isEditing ? 'Обновить' : 'Добавить' }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

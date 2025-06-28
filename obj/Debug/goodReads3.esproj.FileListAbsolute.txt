@@ -1,0 +1,2 @@
+C:\Users\Game Machine\source\repos\goodReads3\obj\Debug\goodReads3.esproj.SuggestedBindingRedirects.cache
+C:\Users\Game Machine\source\repos\goodReads3\obj\Debug\goodReads3.esproj.CoreCompileInputs.cache
