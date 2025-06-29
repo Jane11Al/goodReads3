@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
-  imports: [CommonModule], // Добавляем CommonModule
+  imports: [CommonModule], 
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.css']
 })
@@ -19,16 +19,8 @@ export class NotificationsComponent {
   ) { }
 
   ngOnInit() {
-   // this.loadPreorderBooks();
     this.loadUserSubscriptions();
   }
-/*
-  loadPreorderBooks() {
-    this.bookService.getPreorderBooks().subscribe(books => {
-      this.preorderBooks = books;
-    });
-  }*/
-
   loadUserSubscriptions() {
     this.preorderService.getUserSubscriptions().subscribe(subscriptions => {
       this.userSubscriptions = subscriptions;

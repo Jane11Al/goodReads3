@@ -3,7 +3,7 @@ import { CartService, CartItem } from '../services/cart.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { BookService } from '../services/book.service'; // Добавим импорт BookService
+import { BookService } from '../services/book.service'; 
 
 @Component({
   selector: 'app-cart',
@@ -17,7 +17,7 @@ export class CartComponent {
 
   constructor(
     private cartService: CartService,
-    private bookService: BookService // Добавим BookService
+    private bookService: BookService 
   ) {
     this.items = this.cartService.getItems();
   }
@@ -26,7 +26,6 @@ export class CartComponent {
     return this.bookService.getAuthorNames(authorId);
   }
 
-  // Остальные методы без изменений
   updateQuantity(item: CartItem, quantity: number): void {
     if (quantity < 1) {
       quantity = 1;

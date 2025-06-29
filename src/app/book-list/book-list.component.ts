@@ -1,4 +1,3 @@
-// book-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../services/book.service';
 import { Book, Author, BookSubscription } from '../services/book.model';
@@ -48,8 +47,6 @@ export class BookListComponent implements OnInit {
       alert('Пожалуйста, войдите в систему, чтобы подписаться на уведомления');
       return;
     }
-
-    // Определяем тип подписки на основе статуса книги
     let subscriptionType: 'preorder' | 'restock' | null = null;
 
     if (book.status === 'coming_soon' || book.status === 'preorder') {
@@ -63,9 +60,8 @@ export class BookListComponent implements OnInit {
       return;
     }
 
-    // Создаем новую подписку
     const newSubscription: BookSubscription = {
-      id: Date.now(), // Используем timestamp как уникальный ID
+      id: Date.now(), 
       username: user.username,
       bookId: book.id,
       type: subscriptionType,
@@ -73,14 +69,8 @@ export class BookListComponent implements OnInit {
       notified: false
     };
 
-    // Добавляем подписку через сервис
     this.subscriptionService.addSubscription(newSubscription);
-
-    // Уведомляем пользователя
     alert(`Вы подписались на уведомления о книге "${book.title}"`);
-
-    // Обновляем состояние подписки (если нужно)
-    // Для мгновенного обновления UI вам может понадобиться обновить состояние
   }
 
   isSubscribed(bookId: number): boolean {
@@ -109,7 +99,6 @@ export class BookListComponent implements OnInit {
     const imgElement = event.target as HTMLImageElement;
     imgElement.src = 'assets/place-holder.jpg';
   }
-
 
   getStatusText(status: string): string {
     switch (status) {

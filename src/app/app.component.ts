@@ -24,7 +24,6 @@ export class AppComponent implements OnDestroy {
   loginError = '';
   currentUser: { username: string, role: string } | null = null;
 
-  // Флаги видимости элементов UI
   showSubscriptions = false;
   showCart = false;
   showOrders = false;
@@ -42,41 +41,32 @@ export class AppComponent implements OnDestroy {
     private userService: UserService,
     @Inject(DOCUMENT) private document: Document
   ) {
-    // Инициализация корзины
     cartService.getItems();
-
-    // Подписка на изменения корзины
     this.cartSubscription = cartService.getCartItems$().subscribe(items => {
       this.cartItemCount = items.reduce((sum, item) => sum + item.quantity, 0);
     });
 
-    // Единая подписка на изменения пользователя
     this.userSubscription = authService.currentUser$.subscribe(user => {
       this.currentUser = user;
 
       if (user) {
-        // Корректное управление ролями
         const isBuyer = user.role === 'buyer';
         const isSeller = user.role === 'seller';
 
         this.showCart = isBuyer;
         this.showOrders = isBuyer;
         this.showSubscriptions = isBuyer;
-        this.showWarehouse = isSeller;  // Только для продавца
+        this.showWarehouse = isSeller; 
       } else {
-        // Сброс флагов при выходе
         this.showCart = false;
         this.showOrders = false;
         this.showSubscriptions = false;
         this.showWarehouse = false;
       }
-
-      // Убрали избыточный detectChanges
     });
   }
 
   ngOnDestroy(): void {
-    // Гарантированная отписка от всех подписок
     this.userSubscription?.unsubscribe();
     this.cartSubscription?.unsubscribe();
   }

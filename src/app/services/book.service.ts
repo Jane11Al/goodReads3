@@ -265,7 +265,6 @@ export class BookService {
   }
 
   addBook(book: Book): void {
-    // Генерируем ID если не установлен
     if (!book.id) {
       book.id = this.getNextId(this.books);
     }
@@ -324,8 +323,6 @@ export class BookService {
     } else if (book.stock <= 0 && book.status === 'available') {
       book.status = 'out_of_stock';
     }
-
-    // Сохраняем только если статус изменился
     if (oldStatus !== book.status) {
       this.saveAllData();
     }

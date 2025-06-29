@@ -1,4 +1,3 @@
-// auth.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -27,7 +26,7 @@ export class AuthService {
   login(username: string, password: string, role: string): boolean {
     if (username && password && role) {
       const userData = { username, role };
-      this.currentUserSubject.next(userData); // Важно: эмитим новое значение
+      this.currentUserSubject.next(userData); 
       localStorage.setItem('currentUser', JSON.stringify(userData));
       return true;
     }
@@ -35,7 +34,7 @@ export class AuthService {
   }
 
   logout(): void {
-    this.currentUserSubject.next(null); // Эмитим null при выходе
+    this.currentUserSubject.next(null); 
     localStorage.removeItem('currentUser');
   }
 
