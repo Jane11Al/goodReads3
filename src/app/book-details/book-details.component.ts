@@ -4,13 +4,13 @@ import { BookService } from '../services/book.service';
 import { Book, BookSubscription } from '../services/book.model';
 import { SubscriptionService } from '../services/subscription.service';
 import { AuthService } from '../services/auth.service';
-import { CurrencyPipe, DatePipe } from '@angular/common'; // Добавлены необходимые пайпы
+import { CurrencyPipe, DatePipe } from '@angular/common'; 
 import { CartService } from '../services/cart.service';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-book-details',
   standalone: true,
-  imports: [CurrencyPipe, DatePipe, CommonModule], // Импорт пайпов
+  imports: [CurrencyPipe, DatePipe, CommonModule], 
   templateUrl: './book-details.component.html',
   styleUrls: ['./book-details.component.css']
 })
@@ -21,7 +21,7 @@ export class BookDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router, // Добавлен Router для навигации
+    private router: Router, 
     private bookService: BookService,
     private subscriptionService: SubscriptionService,
     private cartService: CartService,
@@ -35,13 +35,9 @@ export class BookDetailsComponent implements OnInit {
       this.checkSubscriptions();
     }
   }
-
-  // Метод для возврата назад
   goBack(): void {
-    this.router.navigate(['/']); // Возврат на главную страницу
+    this.router.navigate(['/']); 
   }
-
-  // Получение имен авторов
   getAuthorNames(authorIds: number[] | undefined): string {
     if (!authorIds || authorIds.length === 0) return 'Автор неизвестен';
     return authorIds.map(id => {
@@ -50,7 +46,6 @@ export class BookDetailsComponent implements OnInit {
     }).join(', ');
   }
 
-  // Получение названий жанров
   getGenreNames(genreIds: number[] | undefined): string {
     if (!genreIds || genreIds.length === 0) return 'Жанр не определен';
     return genreIds.map(id => {
@@ -59,7 +54,6 @@ export class BookDetailsComponent implements OnInit {
     }).join(', ');
   }
 
-  // Получение названия издательства
   getPublisherName(publisherId: number | undefined): string {
     if (!publisherId) return 'Издатель неизвестен';
     const publisher = this.bookService.getPublisherById(publisherId);
@@ -147,7 +141,6 @@ export class BookDetailsComponent implements OnInit {
     }
   }
 
-  // Добавлен метод для добавления в корзину
   addToCart(): void {
     if (this.book && this.book.status === 'available') {
       this.cartService.addToCart(this.book);

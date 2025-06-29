@@ -13,8 +13,6 @@
       <h3>{{ book.title }}</h3>
       <p class="author">{{ getAuthorNames(book.authorId) }}</p>
       <p class="description">{{ shortenDescription(book.description) }}</p>
-
-      <!-- Добавляем блок со статусом книги -->
       <div class="book-status" [ngClass]="{
         'status-available': book.status === 'available',
         'status-out': book.status === 'out_of_stock',
@@ -25,8 +23,6 @@
 
       <div class="book-footer">
         <span class="price">{{ book.price | currency:'RUB':'symbol-narrow' }}</span>
-
-        <!-- Заменяем старую кнопку на динамический контент -->
         <div class="book-actions" (click)="$event.stopPropagation()">
           <!-- Для книг в наличии -->
           <button *ngIf="book.status === 'available'"

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Book } from '../services/book.model';
 import { AuthService } from './auth.service';
-import { BehaviorSubject, Observable } from 'rxjs'; // Импортируем BehaviorSubject
+import { BehaviorSubject, Observable } from 'rxjs'; 
 
 export interface CartItem {
   book: Book;
@@ -14,19 +14,16 @@ export interface CartItem {
 export class CartService {
   private cartItems: { [username: string]: CartItem[] } = {};
   private readonly CART_KEY = 'bookstore_cart';
-
-  // Добавляем BehaviorSubject для реактивных обновлений
   private cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
 
   constructor(private authService: AuthService) {
     const savedCart = localStorage.getItem(this.CART_KEY);
     if (savedCart) {
       this.cartItems = JSON.parse(savedCart);
-      this.updateCartSubject(); // Обновляем subject после загрузки
+      this.updateCartSubject(); 
     }
   }
 
-  // Правильная реализация Observable
   getCartItems$(): Observable<CartItem[]> {
     return this.cartItemsSubject.asObservable();
   }
@@ -38,10 +35,9 @@ export class CartService {
 
   private saveCart(): void {
     localStorage.setItem(this.CART_KEY, JSON.stringify(this.cartItems));
-    this.updateCartSubject(); // Обновляем subject после сохранения
+    this.updateCartSubject(); 
   }
 
-  // Обновляем subject текущими данными
   private updateCartSubject(): void {
     const username = this.getCurrentUsername();
     const items = username ? this.cartItems[username] || [] : [];

@@ -17,7 +17,6 @@ export class SubscriptionService {
     if (saved) {
       try {
         this.subscriptions = JSON.parse(saved);
-        // Восстанавливаем объекты Date
         this.subscriptions.forEach(sub => {
           if (typeof sub.createdAt === 'string') {
             sub.createdAt = new Date(sub.createdAt);
@@ -35,7 +34,6 @@ export class SubscriptionService {
   }
 
   addSubscription(sub: BookSubscription): void {
-    // Проверяем уникальность подписки
     const exists = this.subscriptions.some(s =>
       s.username === sub.username &&
       s.bookId === sub.bookId &&

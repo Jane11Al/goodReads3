@@ -4,12 +4,12 @@ import { SubscriptionService } from '../services/subscription.service';
 import { AuthService } from '../services/auth.service';
 import { Book, BookSubscription } from '../services/book.model';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router'; // Добавлен Router
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-my-subscriptions',
-  standalone: true, // Добавлено для standalone компонента
-  imports: [CommonModule], // Добавлено для использования ngIf, ngFor
+  standalone: true, 
+  imports: [CommonModule], 
   templateUrl: './my-subscriptions.component.html',
   styleUrls: ['./my-subscriptions.component.css']
 })
@@ -20,7 +20,7 @@ export class MySubscriptionsComponent implements OnInit {
     private subscriptionService: SubscriptionService,
     private bookService: BookService,
     private authService: AuthService,
-    private router: Router // Добавлен Router
+    private router: Router 
   ) { }
 
   ngOnInit(): void {
@@ -31,7 +31,7 @@ export class MySubscriptionsComponent implements OnInit {
       this.subscriptions = userSubs.map(sub => ({
         ...sub,
         book: this.bookService.getBookById(sub.bookId)
-      })).filter(sub => sub.book); // Фильтруем подписки без книг
+      })).filter(sub => sub.book); 
     }
   }
 
@@ -44,7 +44,6 @@ export class MySubscriptionsComponent implements OnInit {
     return type === 'preorder' ? 'Предзаказ' : 'Уведомление о поступлении';
   }
 
-  // Добавлен метод для перехода к деталям книги
   goToBookDetails(bookId: number): void {
     this.router.navigate(['/book', bookId]);
   }
