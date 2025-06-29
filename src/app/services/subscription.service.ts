@@ -1,57 +1,80 @@
 import { Injectable } from '@angular/core';
-import { Book } from './book.model';
+import { BookSubscription } from './book.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SubscriptionService {
   private readonly SUBSCRIPTIONS_KEY = 'book_subscriptions';
-  private subscriptions: Book[] = [];
+  private subscriptions: BookSubscription[] = [];
 
   constructor() {
     this.loadSubscriptions();
   }
 
-  // Загрузить подписки из localStorage
   private loadSubscriptions(): void {
-    const savedSubs = localStorage.getItem(this.SUBSCRIPTIONS_KEY);
-    if (savedSubs) {
+    const saved = localStorage.getItem(this.SUBSCRIPTIONS_KEY);
+    if (saved) {
       try {
-        this.subscriptions = JSON.parse(savedSubs);
+        this.subscriptions = JSON.parse(saved);
+        // Восстанавливаем объекты Date
+        this.subscriptions.forEach(sub => {
+          if (typeof sub.createdAt === 'string') {
+            sub.createdAt = new Date(sub.createdAt);
+          }
+        });
       } catch (e) {
-        console.error('Ошибка при загрузке подписок:', e);
+        console.error('Error loading subscriptions:', e);
         this.subscriptions = [];
       }
     }
   }
 
-  // Сохранить подписки в localStorage
   private saveSubscriptions(): void {
     localStorage.setItem(this.SUBSCRIPTIONS_KEY, JSON.stringify(this.subscriptions));
   }
 
-  // Добавить подписку
-  addSubscription(book: Book): void {
-    // Проверяем, нет ли уже такой подписки
-    if (!this.subscriptions.some(sub => sub.id === book.id)) {
-      this.subscriptions.push(book);
+  addSubscription(sub: BookSubscription): void {
+    // Проверяем уникальность подписки
+    const exists = this.subscriptions.some(s =>
+      s.username === sub.username &&
+      s.bookId === sub.bookId &&
+      s.type === sub.type
+    );
+
+    if (!exists) {
+      if (!sub.id) sub.id = Date.now();
+      if (!sub.createdAt) sub.createdAt = new Date();
+
+      this.subscriptions.push(sub);
       this.saveSubscriptions();
     }
   }
 
-  // Удалить подписку
-  removeSubscription(bookId: number): void {
-    this.subscriptions = this.subscriptions.filter(book => book.id !== bookId);
+  removeSubscription(id: number): void {
+    this.subscriptions = this.subscriptions.filter(s => s.id !== id);
     this.saveSubscriptions();
   }
 
-  // Получить все подписки
-  getSubscriptions(): Book[] {
-    return [...this.subscriptions];
+  getUserSubscriptions(username: string): BookSubscription[] {
+    return this.subscriptions.filter(s => s.username === username);
   }
 
-  // Проверить, подписан ли пользователь на книгу
-  isSubscribed(bookId: number): boolean {
-    return this.subscriptions.some(book => book.id === bookId);
+  getBookSubscriptions(bookId: number): BookSubscription[] {
+    return this.subscriptions.filter(s => s.bookId === bookId);
+  }
+
+  isUserSubscribed(username: string, bookId: number, type?: 'preorder' | 'restock'): boolean {
+    if (type) {
+      return this.subscriptions.some(s =>
+        s.username === username &&
+        s.bookId === bookId &&
+        s.type === type
+      );
+    }
+    return this.subscriptions.some(s =>
+      s.username === username &&
+      s.bookId === bookId
+    );
   }
 }

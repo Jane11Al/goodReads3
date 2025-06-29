@@ -10,6 +10,7 @@ import { AuthGuard } from './auth.guard';
 import { MySubscriptionsComponent } from './my-subscriptions/my-subscriptions.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 
+
 export const routes: Routes = [
   { path: '', component: BookListComponent },
   { path: 'book/:id', component: BookDetailsComponent },
@@ -17,12 +18,13 @@ export const routes: Routes = [
   { path: 'checkout', component: CheckoutComponent },
   { path: 'my-orders', component: MyOrdersComponent },
   { path: 'warehouse', component: WarehouseComponent },
-  { path: '**', redirectTo: '' },
+  
   { path: 'my-subscriptions', component: MySubscriptionsComponent },
   {
     path: 'warehouse',
     component: WarehouseComponent,
     canActivate: [AuthGuard],
     data: { role: 'seller' }
-  }
+  },
+  { path: '**', redirectTo: '' }
 ];

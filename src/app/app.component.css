@@ -293,7 +293,6 @@ input[type="text"] {
   color: #95a5a6;
 }
 
-/* Кнопка входа */
 .submit-btn {
   width: 100%;
   padding: 16px;
@@ -314,29 +313,6 @@ input[type="text"] {
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
 }
-
-/* Адаптивность */
-@media (max-width: 480px) {
-  .login-modal {
-    padding: 25px 20px;
-    width: 95%;
-  }
-  
-  .role-selector {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .input-container input {
-    padding: 12px 14px;
-  }
-  
-  .submit-btn {
-    padding: 14px;
-    font-size: 16px;
-  }
-}
-/* Добавьте или обновите эти стили в app.component.css */
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -347,14 +323,14 @@ input[type="text"] {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10000; /* Увеличиваем z-index */
+  z-index: 10000; 
   backdrop-filter: blur(5px);
-  overflow-y: auto; /* Добавляем скролл при необходимости */
+  overflow-y: auto; 
 }
 
 .login-modal {
   position: relative;
-  z-index: 10001; /* Устанавливаем выше, чем у бэкдропа */
+  z-index: 10001; 
   background: white;
   border-radius: 12px;
   width: 95%;
@@ -363,9 +339,9 @@ input[type="text"] {
   box-sizing: border-box;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
   animation: modalAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  transform: translateZ(0); /* Создаем новый контекст стекинга */
-  will-change: transform; /* Оптимизация для браузера */
-  margin: 20px 0; /* Для адаптивности */
+  transform: translateZ(0);
+  will-change: transform; 
+  margin: 20px 0; 
 }
 
 @keyframes modalAppear {
@@ -379,16 +355,8 @@ input[type="text"] {
     transform: translateY(0) scale(1);
   }
 }
-
-@media (max-height: 600px) {
-  .login-modal {
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-}
-
 header {
-  z-index: 1000; /* Меньше, чем у модального окна */
+  z-index: 1000; 
 }
 .close-btn {
   position: absolute;
@@ -440,4 +408,17 @@ header {
 
   .notifications-link:hover {
     background-color: #3a56e0;
+  }
+
+.login-modal .input-container input {
+  color: #333 !important; 
+  background: #fff !important; 
+}
+
+  .login-modal .input-container input::placeholder {
+    color: #95a5a6 !important; 
+  }
+  .login-modal .input-container input:focus {
+    color: #333 !important;
+    background: #fff !important;
   }

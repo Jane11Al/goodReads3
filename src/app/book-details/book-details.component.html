@@ -1,62 +1,103 @@
-<div class="book-details-container" *ngIf="book">
-  <div class="navigation">
+<div *ngIf="book" class="book-detail-container">
+  <!-- Кнопка возврата -->
+  <div class="header">
     <button (click)="goBack()">← Назад к списку книг</button>
   </div>
 
-  <div class="book-header">
-      <div class="book-cover">
-        <img [src]="book.imageUrl || 'assets/default-book.jpg'"
-             alt="{{ book.title }}"
-             class="cover-image">
-      </div>
+  <!-- Основная информация о книге -->
+  <div class="book-content">
+    <div class="book-cover">
+      <img [src]="book.imageUrl || 'assets/default-book.jpg'"
+           [alt]="book.title"
+           class="main-cover">
+    </div>
 
-    <div class="book-meta">
+    <div class="book-info">
       <h1 class="book-title">{{ book.title }}</h1>
 
-      <div class="authors" *ngIf="authors.length">
-        <span class="meta-label">Автор:</span>
-        <span>{{ authors.join(', ') }}</span>
+      <div class="book-authors">
+        <span>Авторы:</span>
+        <span>{{ getAuthorNames(book.authorId) }}</span>
       </div>
 
-      <div class="genres" *ngIf="genres.length">
-        <span class="meta-label">Жанры:</span>
-        <span>{{ genres.join(', ') }}</span>
+      <div class="book-genres">
+        <span>Жанры:</span>
+        <span>{{ getGenreNames(book.genreId) }}</span>
       </div>
 
-      <div class="price-section">
-        <span class="price">{{ book.price | currency:'RUB':'symbol-narrow' }}</span>
-        <button class="buy-button">Купить</button>
+      <div class="book-price">
+        <span class="price-label">Цена:</span>
+        <span class="price-value">{{ book.price | currency:'RUB':'symbol-narrow' }}</span>
       </div>
 
-      <div class="availability">
-        <span class="in-stock">✔ В наличии</span>
+      <div class="book-actions">
+        <button (click)="addToCart()" [disabled]="book.status !== 'available'">
+          {{ book.status === 'available' ? 'Добавить в корзину' : 'Недоступно' }}
+        </button>
       </div>
     </div>
   </div>
 
-  <div class="section">
-    <h2>Описание</h2>
-    <p class="book-description">{{ book.description }}</p>
+  <!-- Блок подписки -->
+  <div class="subscription-section">
+    <!-- Для предзаказа -->
+    <div *ngIf="book.status === 'coming_soon' || book.status === 'preorder'" class="subscription-option">
+      <div *ngIf="!isSubscribedToPreorder; else unsubPreorder">
+        <button (click)="subscribeToPreorder()" class="subscribe-btn">
+          Подписаться на предзаказ
+        </button>
+        <p>Будьте первым, кто получит эту книгу!</p>
+      </div>
+      <ng-template #unsubPreorder>
+        <button (click)="unsubscribePreorder()" class="unsubscribe-btn">
+          Отписаться от предзаказа
+        </button>
+        <p>Вы подписаны на уведомление о выходе этой книги</p>
+      </ng-template>
+    </div>
+
+    <!-- Для отсутствующей книги -->
+    <div *ngIf="book.status === 'out_of_stock'" class="subscription-option">
+      <div *ngIf="!isSubscribedToRestock; else unsubRestock">
+        <button (click)="subscribeToRestock()" class="subscribe-btn">
+          Уведомить о поступлении
+        </button>
+        <p>Мы сообщим вам, когда книга появится в наличии</p>
+      </div>
+      <ng-template #unsubRestock>
+        <button (click)="unsubscribeRestock()" class="unsubscribe-btn">
+          Отписаться от уведомления
+        </button>
+        <p>Вы подписаны на уведомление о поступлении этой книги</p>
+      </ng-template>
+    </div>
   </div>
 
-  <div class="section">
+  <!-- Детальная информация -->
+  <div class="book-description">
+    <h2>Описание</h2>
+    <p>{{ book.description }}</p>
+  </div>
+
+  <!-- Технические характеристики -->
+  <div class="book-specs">
     <h2>Характеристики</h2>
     <div class="specs-grid">
-      <div class="spec-item">
+      <div class="spec-row">
         <span class="spec-name">ID товара</span>
-        <span class="spec-value">{{ id }}</span>
+        <span class="spec-value">{{ book.id }}</span>
       </div>
-      <div class="spec-item">
+      <div class="spec-row">
         <span class="spec-name">Издательство</span>
-        <span class="spec-value">{{ publisherName }}</span>
+        <span class="spec-value">{{ getPublisherName(book.publisherId) }}</span>
       </div>
-      <div class="spec-item">
+      <div class="spec-row">
         <span class="spec-name">ISBN</span>
-        <span class="spec-value">{{ isbn }}</span>
+        <span class="spec-value">{{ book.isbn }}</span>
       </div>
-      <div class="spec-item">
+      <div class="spec-row">
         <span class="spec-name">Год издания</span>
-        <span class="spec-value">{{ year }}</span>
+        <span class="spec-value">{{ book.year }}</span>
       </div>
     </div>
   </div>

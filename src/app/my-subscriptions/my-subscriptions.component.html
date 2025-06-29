@@ -1,1 +1,24 @@
-<p>my-subscriptions works!</p>
+<div class="container">
+  <h2>Мои подписки</h2>
+
+  <div *ngIf="subscriptions.length === 0" class="empty-message">
+    <p>У вас пока нет активных подписок.</p>
+    <a routerLink="/">Перейти к каталогу книг</a>
+  </div>
+
+  <div *ngFor="let sub of subscriptions" class="subscription-card">
+    <div *ngIf="sub.book" class="book-info">
+      <img [src]="sub.book.imageUrl || 'assets/default-book.jpg'" alt="Обложка книги" class="book-cover">
+      <div class="book-details">
+        <h3>{{ sub.book.title }}</h3>
+        <p class="subscription-type">
+          Тип подписки: {{ getSubscriptionType(sub.type) }}
+        </p>
+      </div>
+    </div>
+
+    <button (click)="unsubscribe(sub.id)" class="unsubscribe-btn">
+      Отписаться
+    </button>
+  </div>
+</div>

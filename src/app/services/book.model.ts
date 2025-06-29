@@ -27,3 +27,17 @@ export interface Genre {
   id: number;
   name: string;
 }
+export interface BookSubscription {
+  id: number;
+  username: string;  
+  bookId: number;
+  type: 'preorder' | 'restock';
+  createdAt: Date;
+  notified?: boolean;
+}
+export interface User {
+  id: number;
+  username: string;
+  role: string;
+}
+

@@ -31,14 +31,14 @@
       </a>
     </ng-container>
 
-    <ng-container *ngIf="showOrders">
+    <!--ng-container *ngIf="showOrders">
       <a routerLink="/my-orders" class="header-btn" aria-label="Мои заказы">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
           <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" />
         </svg>
         Мои заказы
       </a>
-    </ng-container>
+    </!--ng-container-->
 
     <ng-container *ngIf="showNotifications">
       <a routerLink="/notifications" class="header-btn" aria-label="Уведомления">
@@ -124,7 +124,7 @@
           </div>
           <span>Я продавец</span>
         </div>
-      </div> <!-- Закрывающий тег для div.role-selector -->
+      </div> 
 
       <div class="input-group">
         <label for="username">Имя пользователя</label>
